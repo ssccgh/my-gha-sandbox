@@ -1,0 +1,33 @@
+name: dispatch
+on:
+  workflow_run:
+    workflows: ["action1"]
+    types:
+      - completed
+jobs:
+  playbook:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+      packages: read
+      statuses: write
+    name: Run playbook
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get Pull Request Number
+        id: pr
+        run: |
+            echo "pull_request_number=$(gh pr list --limit 1 --state merged --base main | awk '{print $1}')" >> $GITHUB_ENV
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: echo PR number
+        run: echo "pr number is ${{ env.pull_request_number}}"
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PAT_CONTENTS }}
+          repository: ssccgh/my-gha-sandbox-2
+          event-type: my-event
+          client-payload: '{"pr-id": "${{ env.pull_request_number}}"}'
+
