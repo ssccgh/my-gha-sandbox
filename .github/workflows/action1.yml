@@ -29,5 +29,3 @@ jobs:
           event-type: my-event
           client-payload: '{"pr-id": "${{ env.pull_request_number}}"}'
 
-
-          FAKE PR
