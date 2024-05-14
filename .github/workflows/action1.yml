@@ -1,0 +1,22 @@
+name: Release
+on:
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "main" ]
+    types: [opened, synchronize, reopened]
+  push:
+    branches: ["main"]
+jobs:
+  playbook:
+    runs-on: ubuntu-latest
+    name: Run playbook
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get Pull Request Number
+        id: pr
+        run: |
+            echo "pull_request_number=$(gh pr view --json number -q .number || echo "")" >> $GITHUB_ENV
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: echo PR number
+        run: echo "pr number is ${{ env.pr.output}}"
