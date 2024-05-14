@@ -16,8 +16,8 @@ jobs:
       - name: Get Pull Request Number
         id: pr
         run: |
-            echo "pull_request_number=$(gh pr list --limit 1 --state merged --base main | awk '{print $1}')" >> $GITHUB_ENV
+            echo "pull_request_number=$(gh pr list --limit 1 --state merged --base main)" >> $GITHUB_ENV
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: echo PR number
-        run: echo "pr number is ${{ env.pr.output}}"
+        run: echo "pr number is ${{ env.pull_request_number}}"
