@@ -1,7 +1,7 @@
 name: dispatch
 on:
   workflow_run:
-    workflows: ["action1"]
+    workflows: ["release"]
     types:
       - completed
 jobs:
