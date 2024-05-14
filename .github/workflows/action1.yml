@@ -25,6 +25,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          repository: ssccgh/my-gha-sandbox2
+          repository: ssccgh/my-gha-sandbox-2
           event-type: my-event
           client-payload: '{"pr-id": "${{ env.pull_request_number}}"}'
